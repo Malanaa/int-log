@@ -13,7 +13,6 @@ email  = os.getenv("email")
 Add a compare string system which compares strings int he name column and return the name 
 if certain match index
 
-Add total application count
 '''
 
 def setup_header(ws):
@@ -52,7 +51,7 @@ def add_internship(ws, row_num, id_intern,company_name,acc_rejec,link,note):
     ws.update_acell(f"D{row_num}", acc_rejec)
     ws.update_acell(f"E{row_num}", link)
     ws.update_acell(f"F{row_num}", note)
-    print("Succesfully logged application")
+    print("\nSuccesfully logged application")
 
 def find_internship(name):
     found_cell = ws.find(name)
@@ -65,7 +64,7 @@ def find_internship(name):
         print(f"Links: {values[4]}")
         print(f"Additional Notes: {values[5]}")
     else:
-        print("application not found")
+        print("\nApplication not found")
 
 def find_internship_row(name):
     found_cell = ws.find(name)
@@ -73,7 +72,7 @@ def find_internship_row(name):
         values = ws.row_values(found_cell.row)
         return found_cell.row
     else:
-        print("application not found")
+        print("\nApplication not found")
 
 def current_status(name):
     found_cell = ws.find(name)
@@ -81,29 +80,29 @@ def current_status(name):
         values = ws.row_values(found_cell.row)
         print(f"Current status: {values[3]}")
     else:
-        print("application not found")
+        print("\nApplication not found")
 
 def update_status(name, new_status):
     row_num = find_internship_row(name)
     ws.update_acell(f"D{row_num}", new_status)
-    print("Status succesfully updated")
+    print("\nStatus succesfully updated")
 
 try:
     sh = client.open('internshipLog')
-    print("Spreadsheet found")
+    print("\nSpreadsheet found")
     ws = sh.sheet1
     setup_header(ws)
 except gspread.exceptions.SpreadsheetNotFound:
     sh = client.create('internshipLog')
     sh.share(email, perm_type='user', role='writer')
-    print("Spreadsheet created and shared")
+    print("\nSpreadsheet created and shared")
     ws = sh.sheet1
     setup_header(ws)
 
 def main():
 
     companies = ws.col_values(2)
-    print(f"Total Applications: {len(companies) - 1}")
+    print(f"\nTotal Applications: {len(companies) - 1}")
 
     loop = True
     while loop:
@@ -118,16 +117,16 @@ enter_choice: ''', ["L","F","U","E"])
             row_num = id_intern + 2
             add_internship(ws, row_num, id_intern, company_name, acc_rejec, link, note)
         elif choice == 'F':
-            name = input('Name of Company: ')
+            name = input('\nName of Company: ')
             found_internship = find_internship(name)
         elif choice == 'U':
-            name = input('Name of Company: ')
+            name = input('\nName of Company: ')
             current_status(name)
-            new_status = check("Accepted/Rejected/Pending (A/R/P): ", ["A","R","P"])
+            new_status = check("\nAccepted/Rejected/Pending (A/R/P): ", ["A","R","P"])
             update_status(name, new_status)
         elif choice == "E":
             loop = False
     
 
 main()
-print("It's joever")
+print("\nIt's joever")
