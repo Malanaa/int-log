@@ -1,0 +1,1 @@
+A simple program that let's me manage internship applications from my terminal using gspread,googleapi and python.
