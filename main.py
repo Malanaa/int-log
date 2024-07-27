@@ -9,6 +9,11 @@ from datetime import datetime
 dotenv.load_dotenv()
 email  = os.getenv("email")
 
+'''
+Add a compare string system which compares strings int he name column and return the name 
+if certain match index
+'''
+
 def setup_header(ws):
         ws.update_cell( 1, 1, "ID")
         ws.update_cell( 1, 2, "CompanyName")
