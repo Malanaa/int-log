@@ -1,14 +1,15 @@
 import gspread
 from google.oauth2.service_account import Credentials
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
+path_name  = os.getenv("creds_var")
 scopes = [
-    "https://www.googleapis.com/auth/spreadsheets"
+'https://www.googleapis.com/auth/spreadsheets',
+'https://www.googleapis.com/auth/drive'
 ]
 
-sheet_id = "1hwHOCX9JFfZgiEYGATgCT8z1_-7ZGvKkP6nKAY7ICS0"
 
-
-creds = Credentials.from_service_account_file("credentials.json", scopes=scopes)
+creds = Credentials.from_service_account_file(path_name, scopes=scopes)
 client = gspread.authorize(creds)
-
-sheet = client.open_by_key("1hwHOCX9JFfZgiEYGATgCT8z1_-7ZGvKkP6nKAY7ICS0")
