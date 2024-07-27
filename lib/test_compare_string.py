@@ -24,9 +24,17 @@ def compare_string_openai(string1, string2):
         model="gpt-3.5-turbo",
     )
 
+
     return result.choices[0].text.strip()
 
-print(compare_string_gemini("Wells Fargo ", "Walls fargo Se"))
+
+
+
+var = input("openai or gemeni or llama: ")
+if var == 'o':
+    print(compare_string_openai("Wells Fargo ", "Walls fargo Se"))
+elif var == 'g':
+    print(compare_string_gemini("Wells Fargo ", "Walls fargo Se"))
 
 
 #give it time, just made the api keys and see if they work
