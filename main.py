@@ -24,10 +24,11 @@ def get_info():
     return company_name, acc_rejec, link, note
 
 def id_assign(ws):
+    
     ids = ws.col_values(1)
     ids.remove(ids[0])
-
     id_new = 0 
+
     if len(ids) > 0:
         sorted(ids)
         id_new = int(ids[len(ids) - 1])
