@@ -2,6 +2,7 @@ import gspread
 import os
 import dotenv
 from lib.input_check import check
+from lib.compare_string_natural import similar_string
 from setup.setup import client 
 from datetime import datetime
 
@@ -51,28 +52,54 @@ def add_internship(ws, row_num, id_intern,company_name,acc_rejec,link,note):
     ws.update_acell(f"D{row_num}", acc_rejec)
     ws.update_acell(f"E{row_num}", link)
     ws.update_acell(f"F{row_num}", note)
-    print("\nSuccesfully logged application")
+    print("\nSuccesfully logged application.")
 
 def find_internship(name):
     found_cell = ws.find(name)
     if found_cell != None:
         values = ws.row_values(found_cell.row)
-        print(f"ID: {values[0]}")
+        print(f"\nID: {values[0]}")
         print(f"Company: {values[1]}")
         print(f"Date: {values[2]}")
         print(f"Status: {values[3]}")
         print(f"Links: {values[4]}")
         print(f"Additional Notes: {values[5]}")
     else:
-        print("\nApplication not found")
-
+        print("\nApplication not found. Trying another search method.")
+        company_names = ws.col_values(2)
+        company_names.remove(company_names[0])
+        for i in range(len(company_names)):
+            similarBool = similar_string(name, company_names[i])
+            if similarBool:
+                new_name = company_names[i]
+                found_cell = ws.find(new_name)
+                values = ws.row_values(found_cell.row)
+                print(f"\nID: {values[0]}")
+                print(f"Company: {values[1]}")
+                print(f"Date: {values[2]}")
+                print(f"Status: {values[3]}")
+                print(f"Links: {values[4]}")
+                print(f"Additional Notes: {values[5]}")
+                break
+            else:
+                print("Application really not found.")
+                
 def find_internship_row(name):
     found_cell = ws.find(name)
     if found_cell != None:
-        values = ws.row_values(found_cell.row)
         return found_cell.row
     else:
-        print("\nApplication not found")
+        print("\nApplication not found. Trying another search method")
+        company_names = ws.col_values(2)
+        company_names.remove(company_names[0])
+        for i in range(len(company_names)):
+            similarBool = similar_string(name, company_names[i])
+            if similarBool:
+                new_name = company_names[i]
+                found_cell = ws.find(new_name)
+                return found_cell.row
+            else:
+                print("Application really not found.")
 
 def current_status(name):
     found_cell = ws.find(name)
@@ -80,7 +107,19 @@ def current_status(name):
         values = ws.row_values(found_cell.row)
         print(f"Current status: {values[3]}")
     else:
-        print("\nApplication not found")
+        print("\nApplication not found. Trying another search method")
+        company_names = ws.col_values(2)
+        company_names.remove(company_names[0])
+        for i in range(len(company_names)):
+            similarBool = similar_string(name, company_names[i])
+            if similarBool:
+                new_name = company_names[i]
+                found_cell = ws.find(new_name)
+                values = ws.row_values(found_cell.row)
+                print(f"Current status: {values[3]}")
+                break
+            else:
+                print("Application really not found.")
 
 def update_status(name, new_status):
     row_num = find_internship_row(name)
