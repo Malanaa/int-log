@@ -12,6 +12,8 @@ email  = os.getenv("email")
 '''
 Add a compare string system which compares strings int he name column and return the name 
 if certain match index
+
+Add total application count
 '''
 
 def setup_header(ws):
@@ -99,6 +101,9 @@ except gspread.exceptions.SpreadsheetNotFound:
     setup_header(ws)
 
 def main():
+
+    companies = ws.col_values(2)
+    print(f"Total Applications: {len(companies) - 1}")
 
     loop = True
     while loop:
