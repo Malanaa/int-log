@@ -11,8 +11,8 @@ dotenv.load_dotenv()
 email  = os.getenv("email")
 
 '''
-Add a compare string system which compares strings int he name column and return the name 
-if certain match index
+
+This is how I keep track of my internship applications
 
 '''
 
@@ -164,5 +164,6 @@ enter_choice: ''', ["L","F","U","E"])
             loop = False
     
 
+    print("\nIt's joever")
+
 main()
-print("\nIt's joever")
