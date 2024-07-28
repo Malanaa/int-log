@@ -65,7 +65,7 @@ def find_internship(name):
         print(f"Links: {values[4]}")
         print(f"Additional Notes: {values[5]}")
     else:
-        print("\nApplication not found. Trying another search method.")
+        print("\nExact string not found. Trying another search method.")
         company_names = ws.col_values(2)
         company_names.remove(company_names[0])
         for i in range(len(company_names)):
@@ -80,16 +80,15 @@ def find_internship(name):
                 print(f"Status: {values[3]}")
                 print(f"Links: {values[4]}")
                 print(f"Additional Notes: {values[5]}")
-                break
-            else:
-                print("Application really not found.")
+                return True 
+        print("Application really not found.")
                 
 def find_internship_row(name):
     found_cell = ws.find(name)
     if found_cell != None:
         return found_cell.row
     else:
-        print("\nApplication not found. Trying another search method")
+        print("\nExact string not found. Trying another search method")
         company_names = ws.col_values(2)
         company_names.remove(company_names[0])
         for i in range(len(company_names)):
@@ -98,8 +97,7 @@ def find_internship_row(name):
                 new_name = company_names[i]
                 found_cell = ws.find(new_name)
                 return found_cell.row
-            else:
-                print("Application really not found.")
+        print("Application really not found.")
 
 def current_status(name):
     found_cell = ws.find(name)
@@ -107,7 +105,7 @@ def current_status(name):
         values = ws.row_values(found_cell.row)
         print(f"Current status: {values[3]}")
     else:
-        print("\nApplication not found. Trying another search method")
+        print("\nExact string not found. Trying another search method")
         company_names = ws.col_values(2)
         company_names.remove(company_names[0])
         for i in range(len(company_names)):
@@ -117,9 +115,8 @@ def current_status(name):
                 found_cell = ws.find(new_name)
                 values = ws.row_values(found_cell.row)
                 print(f"Current status: {values[3]}")
-                break
-            else:
-                print("Application really not found.")
+                return True
+        print("Application really not found.")
 
 def update_status(name, new_status):
     row_num = find_internship_row(name)
@@ -160,7 +157,7 @@ enter_choice: ''', ["L","F","U","E"])
             found_internship = find_internship(name)
         elif choice == 'U':
             name = input('\nName of Company: ')
-            current_status(name)
+            status = current_status(name)
             new_status = check("\nAccepted/Rejected/Pending (A/R/P): ", ["A","R","P"])
             update_status(name, new_status)
         elif choice == "E":
